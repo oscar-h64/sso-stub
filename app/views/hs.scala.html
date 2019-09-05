@@ -1,0 +1,22 @@
+@(shire: String, providerId: String, target: String)(implicit context: RequestContext)
+
+@main("Handle Service") {
+    <p><samp>@providerId</samp> wants to perform authentication!</p>
+    <p>The assertion consumer service URL for this application is <samp>@shire</samp>. </p>
+    <p>The redirect URL is <samp>@target</samp></p>
+
+    <form>
+        @context.csrfHelper.formField
+        <div class="form-group">
+            <label for="who">
+                Who do you want to be?            </label>
+            <select id="who" class="form-control">
+                <optgroup label="School of architecture">
+                    <option>Rebecca Ward-Moore, 4200001, 2nd year UG student</option>
+                    <option>Jonathan Moore, 5200002, Staff</option>
+                </optgroup>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">POST to the ACS</button>
+    </form>
+}
