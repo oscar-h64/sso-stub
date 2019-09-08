@@ -43,7 +43,6 @@
     "webpack-stream": "5.2.1"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-pro": "5.9.0",
     "@universityofwarwick/id7": "2.4.5",
     "@universityofwarwick/serverpipe": "1.0.2",
     "bootstrap-3-typeahead": "github:UniversityofWarwick/Bootstrap-3-Typeahead#acada2f8e5d9a70dbb37c1fd152895937a03f8d5",
@@ -54,9 +53,9 @@
     "loglevel": "1.6.3"
   },
   "scripts": {
-    "watch": "NODE_ENV=development webpack --mode development --watch",
-    "dev": "NODE_ENV=development webpack --mode development",
-    "build": "NODE_ENV=production webpack --mode production --env.production",
+    "watch": "NODE_ENV=development node node_modules/webpack-cli/bin/cli.js --mode development --watch",
+    "dev": "NODE_ENV=development node node_modules/webpack-cli/bin/cli.js --mode development",
+    "build": "NODE_ENV=production node node_modules/webpack-cli/bin/cli.js --mode production --env.production",
     "test": "NODE_PATH=\"$PWD/app/assets/js:$PWD/test/assets/js\" node node_modules/mocha/bin/mocha -r @babel/register -r TestHelper --recursive test/assets/js",
     "bamboo": "NODE_PATH=\"$PWD/app/assets/js:$PWD/test/assets/js\" node node_modules/mocha/bin/mocha -R mocha-bamboo-reporter -r @babel/register -r TestHelper --recursive test/assets/js"
   }

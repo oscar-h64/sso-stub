@@ -92,6 +92,8 @@ val appDeps = Seq(
   "net.codingwell" %% "scala-guice" % "4.2.6",
   "com.google.inject.extensions" % "guice-multibindings" % "4.2.2",
   "com.adrianhurt" %% "play-bootstrap" % "1.5-P27-B3",
+
+  "xfire" % "opensaml" % "1.0.1",
   
 // Upgrade transitive dependency on Apache httpclient to remediate directory traversal
   // https://snyk.io/vuln/SNYK-JAVA-ORGAPACHEHTTPCOMPONENTS-31517

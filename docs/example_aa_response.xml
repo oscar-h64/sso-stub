@@ -1,0 +1,117 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <soap:Body>
+        <Response xmlns="urn:oasis:names:tc:SAML:1.0:protocol" xmlns:saml="urn:oasis:names:tc:SAML:1.0:assertion" xmlns:samlp="urn:oasis:names:tc:SAML:1.0:protocol" InResponseTo="e15ec3cb8074ceeade3884336675565c" IssueInstant="2019-08-31T16:23:23.961Z" MajorVersion="1" MinorVersion="1" ResponseID="d7e800307e0148bdee70830ff1b6312b">
+            <Status>
+                <StatusCode Value="samlp:Success"></StatusCode>
+            </Status>
+            <Assertion xmlns="urn:oasis:names:tc:SAML:1.0:assertion" AssertionID="b051cb36719fe6b240bfab8960eca75f" IssueInstant="2019-08-31T16:23:23.961Z" Issuer="urn:mace:eduserv.org.uk:athens:provider:warwick.ac.uk" MajorVersion="1" MinorVersion="1">
+                <Conditions NotBefore="2019-08-31T16:23:23.961Z" NotOnOrAfter="2019-08-31T16:24:23.961Z">
+                    <AudienceRestrictionCondition>
+                        <Audience>urn:frankenstein.warwick.ac.uk:service</Audience>
+                    </AudienceRestrictionCondition>
+                </Conditions>
+                <AttributeStatement>
+                    <Subject>
+                        <NameIdentifier Format="urn:websignon:uuid" NameQualifier="urn:mace:eduserv.org.uk:athens:provider:warwick.ac.uk">fiftycharactersofalphanumericcharactersinlowercase</NameIdentifier>
+                        <SubjectConfirmation>
+                            <ConfirmationMethod>urn:oasis:names:tc:SAML:1.0:cm:bearer</ConfirmationMethod>
+                        </SubjectConfirmation>
+                    </Subject>
+                    <Attribute xmlns:typens="urn:mace:shibboleth:1.0" AttributeName="mail" AttributeNamespace="urn:mace:shibboleth:1.0:attributeNamespace:uri">
+                        <AttributeValue xsi:type="typens:AttributeValueType">A.Williams.9@warwick.ac.uk</AttributeValue>
+                    </Attribute>
+                    <Attribute xmlns:typens="urn:mace:shibboleth:1.0" AttributeName="urn:websignon:proxygrantingticket" AttributeNamespace="urn:mace:shibboleth:1.0:attributeNamespace:uri">
+                        <AttributeValue xsi:type="typens:AttributeValueType">fiftycharactersofalphanumericcharactersinlowercase</AttributeValue>
+                    </Attribute>
+                    <Attribute xmlns:typens="urn:mace:shibboleth:1.0" AttributeName="student" AttributeNamespace="urn:mace:shibboleth:1.0:attributeNamespace:uri">
+                        <AttributeValue xsi:type="typens:AttributeValueType">false</AttributeValue>
+                    </Attribute>
+                    <Attribute xmlns:typens="urn:mace:shibboleth:1.0" AttributeName="urn:mace:dir:attribute-def:eduPersonTargetedID" AttributeNamespace="urn:mace:shibboleth:1.0:attributeNamespace:uri">
+                        <AttributeValue xsi:type="typens:AttributeValueType">3l1oe72y1ho2dkp922frjnc3w</AttributeValue>
+                    </Attribute>
+                    <Attribute xmlns:typens="urn:mace:shibboleth:1.0" AttributeName="urn:websignon:usersource" AttributeNamespace="urn:mace:shibboleth:1.0:attributeNamespace:uri">
+                        <AttributeValue xsi:type="typens:AttributeValueType">WarwickADS</AttributeValue>
+                    </Attribute>
+                    <Attribute xmlns:typens="urn:mace:shibboleth:1.0" AttributeName="dn" AttributeNamespace="urn:mace:shibboleth:1.0:attributeNamespace:uri">
+                        <AttributeValue xsi:type="typens:AttributeValueType">CN=u1673477,OU=Staff,OU=CU,OU=WARWICK,DC=ads,DC=warwick,DC=ac,DC=uk</AttributeValue>
+                    </Attribute>
+                    <Attribute xmlns:typens="urn:mace:shibboleth:1.0" AttributeName="title" AttributeNamespace="urn:mace:shibboleth:1.0:attributeNamespace:uri">
+                        <AttributeValue xsi:type="typens:AttributeValueType">Temporary Worker</AttributeValue>
+                    </Attribute>
+                    <Attribute xmlns:typens="urn:mace:shibboleth:1.0" AttributeName="urn:websignon:loggedin" AttributeNamespace="urn:mace:shibboleth:1.0:attributeNamespace:uri">
+                        <AttributeValue xsi:type="typens:AttributeValueType">true</AttributeValue>
+                    </Attribute>
+                    <Attribute xmlns:typens="urn:mace:shibboleth:1.0" AttributeName="deptshort" AttributeNamespace="urn:mace:shibboleth:1.0:attributeNamespace:uri">
+                        <AttributeValue xsi:type="typens:AttributeValueType">IT Services</AttributeValue>
+                    </Attribute>
+                    <Attribute xmlns:typens="urn:mace:shibboleth:1.0" AttributeName="urn:websignon:ipaddress" AttributeNamespace="urn:mace:shibboleth:1.0:attributeNamespace:uri">
+                        <AttributeValue xsi:type="typens:AttributeValueType">213.230.198.7</AttributeValue>
+                    </Attribute>
+                    <Attribute xmlns:typens="urn:mace:shibboleth:1.0" AttributeName="passwordexpired" AttributeNamespace="urn:mace:shibboleth:1.0:attributeNamespace:uri">
+                        <AttributeValue xsi:type="typens:AttributeValueType">FALSE</AttributeValue>
+                    </Attribute>
+                    <Attribute xmlns:typens="urn:mace:shibboleth:1.0" AttributeName="sn" AttributeNamespace="urn:mace:shibboleth:1.0:attributeNamespace:uri">
+                        <AttributeValue xsi:type="typens:AttributeValueType">Williams</AttributeValue>
+                    </Attribute>
+                    <Attribute xmlns:typens="urn:mace:shibboleth:1.0" AttributeName="logindisabled" AttributeNamespace="urn:mace:shibboleth:1.0:attributeNamespace:uri">
+                        <AttributeValue xsi:type="typens:AttributeValueType">FALSE</AttributeValue>
+                    </Attribute>
+                    <Attribute xmlns:typens="urn:mace:shibboleth:1.0" AttributeName="warwickukfedgroup" AttributeNamespace="urn:mace:shibboleth:1.0:attributeNamespace:uri">
+                        <AttributeValue xsi:type="typens:AttributeValueType">Staff</AttributeValue>
+                    </Attribute>
+                    <Attribute xmlns:typens="urn:mace:shibboleth:1.0" AttributeName="urn:websignon:passwordlastchanged" AttributeNamespace="urn:mace:shibboleth:1.0:attributeNamespace:uri">
+                        <AttributeValue xsi:type="typens:AttributeValueType">2019-04-04T11:03:15.004+01:00</AttributeValue>
+                    </Attribute>
+                    <Attribute xmlns:typens="urn:mace:shibboleth:1.0" AttributeName="warwicktargetgroup" AttributeNamespace="urn:mace:shibboleth:1.0:attributeNamespace:uri">
+                        <AttributeValue xsi:type="typens:AttributeValueType">Casual staff</AttributeValue>
+                    </Attribute>
+                    <Attribute xmlns:typens="urn:mace:shibboleth:1.0" AttributeName="urn:websignon:ssc" AttributeNamespace="urn:mace:shibboleth:1.0:attributeNamespace:uri">
+                        <AttributeValue xsi:type="typens:AttributeValueType">fiftycharactersofalphanumericcharactersinlowercase</AttributeValue>
+                    </Attribute>
+                    <Attribute xmlns:typens="urn:mace:shibboleth:1.0" AttributeName="ou" AttributeNamespace="urn:mace:shibboleth:1.0:attributeNamespace:uri">
+                        <AttributeValue xsi:type="typens:AttributeValueType">IT Services</AttributeValue>
+                    </Attribute>
+                    <Attribute xmlns:typens="urn:mace:shibboleth:1.0" AttributeName="warwickitsclass" AttributeNamespace="urn:mace:shibboleth:1.0:attributeNamespace:uri">
+                        <AttributeValue xsi:type="typens:AttributeValueType">Staff</AttributeValue>
+                    </Attribute>
+                    <Attribute xmlns:typens="urn:mace:shibboleth:1.0" AttributeName="urn:mace:dir:attribute-def:eduPersonAffiliation" AttributeNamespace="urn:mace:shibboleth:1.0:attributeNamespace:uri">
+                        <AttributeValue xsi:type="typens:AttributeValueType">member</AttributeValue>
+                    </Attribute>
+                    <Attribute xmlns:typens="urn:mace:shibboleth:1.0" AttributeName="givenName" AttributeNamespace="urn:mace:shibboleth:1.0:attributeNamespace:uri">
+                        <AttributeValue xsi:type="typens:AttributeValueType">Adam</AttributeValue>
+                    </Attribute>
+                    <Attribute xmlns:typens="urn:mace:shibboleth:1.0" AttributeName="urn:websignon:timestamp" AttributeNamespace="urn:mace:shibboleth:1.0:attributeNamespace:uri">
+                        <AttributeValue xsi:type="typens:AttributeValueType">2018-12-12T15:30:38.875Z</AttributeValue>
+                    </Attribute>
+                    <Attribute xmlns:typens="urn:mace:shibboleth:1.0" AttributeName="staff" AttributeNamespace="urn:mace:shibboleth:1.0:attributeNamespace:uri">
+                        <AttributeValue xsi:type="typens:AttributeValueType">true</AttributeValue>
+                    </Attribute>
+                    <Attribute xmlns:typens="urn:mace:shibboleth:1.0" AttributeName="warwickdeptcode" AttributeNamespace="urn:mace:shibboleth:1.0:attributeNamespace:uri">
+                        <AttributeValue xsi:type="typens:AttributeValueType">IN</AttributeValue>
+                    </Attribute>
+                    <Attribute xmlns:typens="urn:mace:shibboleth:1.0" AttributeName="cn" AttributeNamespace="urn:mace:shibboleth:1.0:attributeNamespace:uri">
+                        <AttributeValue xsi:type="typens:AttributeValueType">u1673477</AttributeValue>
+                    </Attribute>
+                    <Attribute xmlns:typens="urn:mace:shibboleth:1.0" AttributeName="warwickukfedmember" AttributeNamespace="urn:mace:shibboleth:1.0:attributeNamespace:uri">
+                        <AttributeValue xsi:type="typens:AttributeValueType">Y</AttributeValue>
+                    </Attribute>
+                    <Attribute xmlns:typens="urn:mace:shibboleth:1.0" AttributeName="urn:mace:dir:attribute-def:eduPersonScopedAffiliation" AttributeNamespace="urn:mace:shibboleth:1.0:attributeNamespace:uri">
+                        <AttributeValue xsi:type="typens:AttributeValueType">member@warwick.ac.uk</AttributeValue>
+                    </Attribute>
+                    <Attribute xmlns:typens="urn:mace:shibboleth:1.0" AttributeName="warwickuniid" AttributeNamespace="urn:mace:shibboleth:1.0:attributeNamespace:uri">
+                        <AttributeValue xsi:type="typens:AttributeValueType">1673477</AttributeValue>
+                    </Attribute>
+                    <Attribute xmlns:typens="urn:mace:shibboleth:1.0" AttributeName="warwickathens" AttributeNamespace="urn:mace:shibboleth:1.0:attributeNamespace:uri">
+                        <AttributeValue xsi:type="typens:AttributeValueType">Y</AttributeValue>
+                    </Attribute>
+                    <Attribute xmlns:typens="urn:mace:shibboleth:1.0" AttributeName="warwickprimary" AttributeNamespace="urn:mace:shibboleth:1.0:attributeNamespace:uri">
+                        <AttributeValue xsi:type="typens:AttributeValueType">Yes</AttributeValue>
+                    </Attribute>
+                    <Attribute xmlns:typens="urn:mace:shibboleth:1.0" AttributeName="urn:websignon:usertype" AttributeNamespace="urn:mace:shibboleth:1.0:attributeNamespace:uri">
+                        <AttributeValue xsi:type="typens:AttributeValueType">Staff</AttributeValue>
+                    </Attribute>
+                </AttributeStatement>
+            </Assertion>
+        </Response>
+    </soap:Body>
+</soap:Envelope>

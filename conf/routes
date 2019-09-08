@@ -12,6 +12,7 @@ GET         /service/healthcheck                    @warwick.healthcheck.Injecte
 
 GET         /                                       @controllers.IndexController.home
 GET         /origin/hs                              @controllers.IndexController.hs(shire, providerId, target)
+POST        /origin/hs                              @controllers.IndexController.generateAcs(shire, providerId, target, uid)
 
 ## Fallbacks ##
 

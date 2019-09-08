@@ -16,4 +16,9 @@ class IndexController extends BaseController {
   def hs(shire: String, providerId: String, target: String) = Action { implicit request =>
     Ok(views.html.hs(shire, providerId, target))
   }
+
+  // TODO: Use form case class here
+  def generateAcs(shire: String, providerId: String, target: String, uid : String) = Action { implicit request =>
+    Ok(<message>It was okay</message>)
+  }
 }
