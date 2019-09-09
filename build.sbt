@@ -94,8 +94,9 @@ val appDeps = Seq(
   "com.adrianhurt" %% "play-bootstrap" % "1.5-P27-B3",
 
   "xfire" % "opensaml" % "1.0.1",
+  "uk.co.halfninja" % "random-name-generator_2.12" % "0.3-warwick",
   
-// Upgrade transitive dependency on Apache httpclient to remediate directory traversal
+  // Upgrade transitive dependency on Apache httpclient to remediate directory traversal
   // https://snyk.io/vuln/SNYK-JAVA-ORGAPACHEHTTPCOMPONENTS-31517
   "org.apache.httpcomponents" % "httpclient" % "4.5.9",
 
