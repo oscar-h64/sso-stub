@@ -4,7 +4,7 @@ import controllers.RequestContext
 import javax.inject.Inject
 import play.api.Configuration
 import play.api.mvc.RequestHeader
-import services.NavigationService
+import services.{FakeMemberService, NavigationService}
 
 trait ImplicitRequestContext {
 

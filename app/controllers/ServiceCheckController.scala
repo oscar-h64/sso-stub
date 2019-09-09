@@ -7,9 +7,7 @@ import play.api.mvc._
 import scala.concurrent.Future
 
 @Singleton
-class ServiceCheckController @Inject()(
-  life: ApplicationLifecycle,
-) extends InjectedController {
+class ServiceCheckController @Inject()(life: ApplicationLifecycle) extends InjectedController {
 
   var stopping = false
   life.addStopHook(() => {

@@ -3,7 +3,7 @@ import warwick.Changes
 
 ThisBuild / organization := "uk.ac.warwick"
 ThisBuild / version := "1.0-SNAPSHOT"
-ThisBuild / scalaVersion := "2.13.0"
+ThisBuild / scalaVersion := "2.12.0"
 
 ThisBuild / javacOptions ++= Seq("-source", "1.8", "-target", "1.8")
 ThisBuild / scalacOptions ++= Seq(
@@ -14,7 +14,7 @@ ThisBuild / scalacOptions ++= Seq(
   "-unchecked",
   "-Ywarn-numeric-widen",
   "-Xfatal-warnings",
-  "-Xsource:2.13"
+  "-Xsource:2.12"
 )
 ThisBuild / scalacOptions in Test ++= Seq("-Yrangepos")
 ThisBuild / scalacOptions in (Compile, doc) ++= Seq("-no-link-warnings")

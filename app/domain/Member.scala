@@ -4,8 +4,27 @@ import java.time.Instant
 
 import domain.SandboxData.Department
 
-class Member(
-  userCode: String,
+abstract class Member {
+  def userCode: String
+
+  def userSource: String
+
+  def department: Department
+
+  def givenName: String
+
+  def familyName: String
+
+  def warwickPrimary: Boolean
+
+  def mail: String
+
+  def warwickTargetGroup: String
+
+  def universityId: String
+}
+
+case class BasicMember(userCode: String,
   userSource: String,
   department: Department,
   givenName: String,
@@ -13,8 +32,7 @@ class Member(
   warwickPrimary: Boolean,
   mail: String,
   warwickTargetGroup: String,
-  universityId: String
-)
+  universityId: String) extends Member
 
 case class MemberAuthorityResponse(userCode: String,
   userSource: String,
@@ -35,27 +53,44 @@ case class MemberAuthorityResponse(userCode: String,
   itsClass: WarwickItsClass,
   targetGroup: String,
   title: String // todo; do students have a title?
-) extends Member(userCode, userSource, department, givenName, familyName, warwickPrimary, mail, warwickTargetGroup, universityId)
+) extends Member
 
 sealed abstract class MemberEduTypeAffiliation(val value: String)
+
 object MemberEduTypeAffiliation {
+
   case object Faculty extends MemberEduTypeAffiliation("faculty")
+
   case object Student extends MemberEduTypeAffiliation("student")
+
   case object Staff extends MemberEduTypeAffiliation("staff")
+
   case object Alumni extends MemberEduTypeAffiliation("alum")
+
   case object Member extends MemberEduTypeAffiliation("member")
+
   case object Affiliate extends MemberEduTypeAffiliation("affiliate")
+
   case object LibraryWalkIn extends MemberEduTypeAffiliation("library-walk-in")
+
 }
 
 sealed abstract class WarwickItsClass(val value: String)
+
 object WarwickItsClass {
+
   case object Staff extends WarwickItsClass("Staff")
+
   case object UG extends WarwickItsClass("UG")
+
   case object PGT extends WarwickItsClass("PG(T)")
+
   case object PGR extends WarwickItsClass("PG(R)")
+
   case object Alumni extends WarwickItsClass("Alumni")
+
   case object Applicant extends WarwickItsClass("Applicant")
+
 }
 
 object AttributeConverter {

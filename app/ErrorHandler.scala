@@ -14,9 +14,7 @@ import scala.concurrent.Future
   * Serves custom error views.
   */
 @Singleton
-class ErrorHandler @Inject()(
-  environment: Environment,
-) extends DefaultHttpErrorHandler with Results with Status with Logging with Rendering with AcceptExtractors with ImplicitRequestContext {
+class ErrorHandler @Inject()(environment: Environment) extends DefaultHttpErrorHandler with Results with Status with Logging with Rendering with AcceptExtractors with ImplicitRequestContext {
 
   override def onClientError(request: RequestHeader, statusCode: Int, message: String): Future[Result] = {
     implicit val context: RequestContext = requestContext(request)

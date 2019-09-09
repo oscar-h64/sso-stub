@@ -1,7 +1,7 @@
 package domain
 
 import uk.co.halfninja.randomnames.Gender.{female, male, nonspecific}
-import uk.co.halfninja.randomnames.{CompositeNameGenerator, Gender, Name, NameGenerators}
+import uk.co.halfninja.randomnames.{CompositeNameGenerator, Name, NameGenerators}
 
 // scalastyle:off magic.number
 object SandboxData {
@@ -144,7 +144,7 @@ object SandboxData {
         Route("Sandbox Studies (Taught)", "ts8p1", DegreeType.Postgraduate, CourseType.PGT, awardCode = "MA", isResearch = false,
           Seq("tss222", "tss3a1", "tss330"),
           4600301, 4600350)
-    ), 5600001, 5600030),
+    ), 5600001, 5600030)
   )
 
   def randomName(id: Long, gender: domain.Gender): Name = {

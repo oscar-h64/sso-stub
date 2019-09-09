@@ -25,12 +25,7 @@ object VariableTtlCacheHelper {
   * If an item is retrieved that is older than this soft TTL, we update its
   * value in the background but return the stale value immediately.
   */
-class AsyncVariableTtlCacheHelper[A](
-  cache: AsyncCacheApi,
-  logger: Logger,
-  ttlStrategy: A => Ttl,
-  timing: TimingService,
-)(implicit executor: ExecutionContext, typeTag: TypeTag[A]) {
+class AsyncVariableTtlCacheHelper[A](cache: AsyncCacheApi, logger: Logger, ttlStrategy: A => Ttl, timing: TimingService)(implicit executor: ExecutionContext, typeTag: TypeTag[A]) {
   import timing._
 
   def getOrElseUpdate(key: String)(update: => Future[A])(implicit t: TimingContext): Future[A] =

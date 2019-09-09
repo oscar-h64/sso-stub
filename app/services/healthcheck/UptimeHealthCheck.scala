@@ -11,7 +11,7 @@ import scala.concurrent.duration._
 
 @Singleton
 class UptimeHealthCheck @Inject()(
-  system: ActorSystem,
+  system: ActorSystem
 ) extends NumericHealthCheck[Long]("uptime") with Logging {
 
   override def value: Long = system.uptime

@@ -1,12 +1,16 @@
 package controllers
 
-import javax.inject.Singleton
+import javax.inject.{Inject, Singleton}
 import play.api.mvc.{Action, AnyContent}
+import services.FakeMemberService
 
 @Singleton
 class IndexController extends BaseController {
+  @Inject
+  private[this] var fakeMemberService: FakeMemberService = _
+
   def home: Action[AnyContent] = Action { implicit request =>
-    Ok(views.html.home())
+    Ok(views.html.home(fakeMemberService.getStaff))
   }
 
   def redirectToPath(path: String, status: Int = MOVED_PERMANENTLY): Action[AnyContent] = Action {

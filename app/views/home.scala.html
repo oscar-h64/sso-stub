@@ -1,7 +1,19 @@
-@()(implicit context: RequestContext)
+@(members: Seq[domain.Member])(implicit context: RequestContext)
 
 @main("Home") {
-  <p>Insert docs here on how to use the tool, including how to configure the SSO config
-  of the client application to point to this stub implementation of the
-  single-sign on server.</p>
+    <p>Insert docs here on how to use the tool, including how to configure the SSO config
+        of the client application to point to this stub implementation of the
+        single-sign on server.</p>
+
+    <h2>Staff</h2>
+    @for(grp <- members.groupBy(m => m.department.name)) {
+        <h3>@(grp._1)</h3>
+        <ul style="columns: 3;">
+
+        @for(member <- grp._2) {
+            <li><strong>@member.userCode</strong> @member.givenName @member.familyName</li>
+        }
+        </ul>
+    }
+    </ul>
 }
