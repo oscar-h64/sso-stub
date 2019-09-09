@@ -79,8 +79,8 @@ const commonConfig = merge([
   {
     plugins: [
       new CopyWebpackPlugin([{
-        from: 'node_modules/@fortawesome/fontawesome-pro/webfonts',
-        to: path.join(paths.ASSETS, 'lib/fontawesome-pro/webfonts'),
+        from: 'node_modules/@fortawesome/fontawesome-free/webfonts',
+        to: path.join(paths.ASSETS, 'lib/fontawesome-free/webfonts'),
       }]),
     ],
   },
