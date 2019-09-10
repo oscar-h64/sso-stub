@@ -1,4 +1,3 @@
-/conf/application.conf
 /conf/functional-test.conf
 /conf/ehcache.properties
 /conf/*secret*
