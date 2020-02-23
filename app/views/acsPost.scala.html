@@ -1,0 +1,16 @@
+@(response: String, acs: String, target: String)(implicit context: RequestContext)
+@main("Continue") {
+    <p>A SAML response has been generated for you. You may now POST it to the SP's ACS.</p>
+    <p>The SP will use the AA to fetch attributes.</p>
+
+    <form id="shibboleth" action="@acs" method="post">
+        <input type="hidden" name="TARGET" value="@target" >
+        <input type="hidden" name="SAMLResponse" value="@response" >
+
+        <input type="submit" value="POST to ACS" class="btn btn-primary">
+
+        <p>    <div class="label label-info">For troubleshooting only</div></p>
+        <pre>@response</pre>
+
+    </form>
+}

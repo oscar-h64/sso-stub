@@ -1,0 +1,49 @@
+@(staffMembers: Seq[domain.Member], studentMembers: Seq[domain.Member])(implicit context: RequestContext)
+
+    @main("Home") {
+        <h2>Getting started</h2>
+
+        <p>Please configure your client app's <samp>x-sso-config.xml</samp> file to point at this sso-stub instance, e.g.</p>
+        <pre>&lt;origin&gt;
+  &lt;login&gt;
+    &lt;location&gt;http://localhost:8090/origin/hs&lt;/location&gt;
+  &lt;/login&gt;
+  &lt;logout&gt;
+    &lt;location&gt;http://localhost:8090/origin/logout&lt;/location&gt;
+  &lt;/logout&gt;
+  &lt;attributeauthority&gt;
+    &lt;location&gt;http://localhost:8090/origin/aa&lt;/location&gt;
+  &lt;/attributeauthority&gt;
+&lt;/origin&gt;</pre>
+
+        <h2>Staff</h2>
+        <div class="columns">
+        @for(grp <- staffMembers.groupBy(m => m.department.name).toSeq.sortBy((a) => a._1)) {
+            <h4>@(grp._1)</h4>
+            <ul>
+
+            @for(member <- grp._2) {
+                <li><strong>@member.userCode</strong>
+                    @member.givenName @member.familyName</li>
+            }
+            </ul>
+        }
+        </div>
+
+        <h2>Students</h2>
+        <div class="columns">
+        @for(grp <- studentMembers.groupBy(m => m.department.name).toSeq.sortBy((a) => a._1)) {
+            <h4>@(grp._1)</h4>
+            <ul>
+
+            @for(member <- grp._2) {
+                <li><strong>@member.userCode</strong>
+                    @member.givenName @member.familyName</li>
+                <ul>
+                    <li>@member.warwickTargetGroup</li>
+                </ul>
+            }
+            </ul>
+        }
+        </div>
+    }
