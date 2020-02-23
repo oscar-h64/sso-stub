@@ -26,3 +26,7 @@ sso-stub and set-up a virtual host for you.
 Otherwise, you'll need to put a reverse proxy in front of `sso-stub` such that
 something can listen on 443.
 
+Next steps
+----------
+
+Visit the homepage and read the instructions on configuring your app's sso-config file.
