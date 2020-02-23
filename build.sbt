@@ -17,7 +17,7 @@ ThisBuild / scalacOptions ++= Seq(
   "-Xsource:2.12"
 )
 ThisBuild / scalacOptions in Test ++= Seq("-Yrangepos")
-ThisBuild / scalacOptions in (Compile, doc) ++= Seq("-no-link-warnings")
+ThisBuild / scalacOptions in(Compile, doc) ++= Seq("-no-link-warnings")
 ThisBuild / webpackEnabled := true
 
 autoAPIMappings := true
@@ -32,7 +32,7 @@ lazy val root = (project in file("."))
     packageZipTarball in Universal := (packageZipTarball in Universal).dependsOn(webpack).value,
     libraryDependencies ++= (appDeps ++ testDeps).map(excludeBadTransitiveDeps),
     Test / javaOptions += "-Dlogger.resource=test-logging.xml",
-    PlayKeys.devSettings := Seq("play.server.http.port" -> "8080"),
+    PlayKeys.devSettings := Seq("play.server.http.port" -> "8090"),
   )
 
 // Separate project rather than an extra config on the root
@@ -92,10 +92,13 @@ val appDeps = Seq(
   "net.codingwell" %% "scala-guice" % "4.2.6",
   "com.google.inject.extensions" % "guice-multibindings" % "4.2.2",
   "com.adrianhurt" %% "play-bootstrap" % "1.5-P27-B3",
-
+  "log4j" % "log4j" % "1.2.17",
+  "xalan" % "xalan" % "2.7.2",
   "xfire" % "opensaml" % "1.0.1",
+  "xerces" % "xercesImpl" % "2.11.0",
+  "org.apache.santuario" % "xmlsec" % "2.1.4",
   "uk.co.halfninja" % "random-name-generator_2.12" % "0.3-warwick",
-  
+
   // Upgrade transitive dependency on Apache httpclient to remediate directory traversal
   // https://snyk.io/vuln/SNYK-JAVA-ORGAPACHEHTTPCOMPONENTS-31517
   "org.apache.httpcomponents" % "httpclient" % "4.5.9",

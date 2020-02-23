@@ -1,20 +1,49 @@
-@(members: Seq[domain.Member])(implicit context: RequestContext)
+@(staffMembers: Seq[domain.Member], studentMembers: Seq[domain.Member])(implicit context: RequestContext)
 
-@main("Home") {
-    <p>Insert docs here on how to use the tool, including how to configure the SSO config
-        of the client application to point to this stub implementation of the
-        single-sign on server.</p>
+    @main("Home") {
+        <h2>Getting started</h2>
 
-    <h2>Staff</h2>
-    <div class="columns">
-    @for(grp <- members.groupBy(m => m.department.name).toSeq.sortBy((a) => a._1)) {
-        <h4>@(grp._1)</h4>
-        <ul>
+        <p>Please configure your client app's <samp>x-sso-config.xml</samp> file to point at this sso-stub instance, e.g.</p>
+        <pre>&lt;origin&gt;
+  &lt;login&gt;
+    &lt;location&gt;http://localhost:8090/origin/hs&lt;/location&gt;
+  &lt;/login&gt;
+  &lt;logout&gt;
+    &lt;location&gt;http://localhost:8090/origin/logout&lt;/location&gt;
+  &lt;/logout&gt;
+  &lt;attributeauthority&gt;
+    &lt;location&gt;http://localhost:8090/origin/aa&lt;/location&gt;
+  &lt;/attributeauthority&gt;
+&lt;/origin&gt;</pre>
 
-        @for(member <- grp._2) {
-            <li><strong>@member.userCode</strong> @member.givenName @member.familyName</li>
+        <h2>Staff</h2>
+        <div class="columns">
+        @for(grp <- staffMembers.groupBy(m => m.department.name).toSeq.sortBy((a) => a._1)) {
+            <h4>@(grp._1)</h4>
+            <ul>
+
+            @for(member <- grp._2) {
+                <li><strong>@member.userCode</strong>
+                    @member.givenName @member.familyName</li>
+            }
+            </ul>
         }
-        </ul>
+        </div>
+
+        <h2>Students</h2>
+        <div class="columns">
+        @for(grp <- studentMembers.groupBy(m => m.department.name).toSeq.sortBy((a) => a._1)) {
+            <h4>@(grp._1)</h4>
+            <ul>
+
+            @for(member <- grp._2) {
+                <li><strong>@member.userCode</strong>
+                    @member.givenName @member.familyName</li>
+                <ul>
+                    <li>@member.warwickTargetGroup</li>
+                </ul>
+            }
+            </ul>
+        }
+        </div>
     }
-    </div>
-}

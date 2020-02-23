@@ -51,7 +51,6 @@ case class MemberAuthorityResponse(userCode: String,
   memberEduTypeAffiliation: MemberEduTypeAffiliation,
   ipAddress: String,
   itsClass: WarwickItsClass,
-  targetGroup: String,
   title: String // todo; do students have a title?
 ) extends Member
 
@@ -100,7 +99,7 @@ object AttributeConverter {
       "urn:websignon:ipaddress" -> r.ipAddress,
       "urn:websignon:passwordlastchanged" -> r.lastPasswordChange.toString, // Must be iso 8601!
       "urn:websignon:ssc" -> r.ssc,
-      "warwicktargetgroup" -> r.targetGroup,
+      "warwicktargetgroup" -> r.warwickTargetGroup,
       "warwickitsclass" -> r.itsClass.value,
       "mail" -> r.mail,
       "urn:websignon:loggedin" -> "true",
@@ -108,8 +107,11 @@ object AttributeConverter {
       "deptshort" -> r.department.name,
       "urn:websignon:usersource" -> r.userSource,
       "cn" -> r.userCode,
+      "staff" -> (r.itsClass == WarwickItsClass.Staff || r.itsClass == WarwickItsClass.PGR).toString,
+      "student" -> (r.itsClass != WarwickItsClass.Staff && r.itsClass != WarwickItsClass.PGR).toString,
       "warwickuniid" -> r.universityId,
       "warwickdeptcode" -> r.department.code,
+      "warwickprimary" -> (if (r.warwickPrimary) "Yes" else "No"),
       "givenName" -> r.givenName,
       "sn" -> r.familyName,
       "dn" -> s"CN=${r.userCode},OU=Staff,OU=CU,OU=WARWICK,DC=ads,DC=warwick,DC=ac,DC=uk", // todo: OU
