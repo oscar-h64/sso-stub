@@ -6,15 +6,18 @@
         <p>Please configure your client app's <samp>x-sso-config.xml</samp> file to point at this sso-stub instance, e.g.</p>
         <pre>&lt;origin&gt;
   &lt;login&gt;
-    &lt;location&gt;http://localhost:8090/origin/hs&lt;/location&gt;
+    &lt;location&gt;https://localhost:8443/origin/hs&lt;/location&gt;
   &lt;/login&gt;
   &lt;logout&gt;
-    &lt;location&gt;http://localhost:8090/origin/logout&lt;/location&gt;
+    &lt;location&gt;https://localhost:8443/origin/logout&lt;/location&gt;
   &lt;/logout&gt;
   &lt;attributeauthority&gt;
     &lt;location&gt;http://localhost:8090/origin/aa&lt;/location&gt;
   &lt;/attributeauthority&gt;
 &lt;/origin&gt;</pre>
+        <p>In this example we use HTTPS for the browser-facing URLs, and HTTP for the backend (to save having to trust the
+certificate in Java's keystore), but it's possible to use all HTTP or all HTTPS for these URLs - it doesn't really matter
+for local development.</p>
 
         <h2>Staff</h2>
         <div class="columns">
