@@ -194,9 +194,6 @@ import com.typesafe.sbt.packager.docker.{Cmd, ExecCmd}
 import com.typesafe.sbt.packager.docker.DockerChmodType
 
 Universal / mappings += file("docker/start.sh") -> "bin/start"
-Universal / mappings ~= {
-  _.filterNot { case (_,path) => Seq("application.conf", "worker.conf").exists(path.contains) }
-}
 
 dockerUpdateLatest := true
 dockerBaseImage := "adoptopenjdk/openjdk8:alpine-slim"
