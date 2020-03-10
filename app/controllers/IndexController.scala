@@ -54,7 +54,7 @@ class IndexController extends BaseController {
     val certGen = new CertAndKeyGen("RSA", "SHA256WithRSA", null)
     certGen.generate(1024)
     val cert = certGen.getSelfCertificate(
-      new X500Name("CN=sso-stub, O=The University of Warwick, OU=IT Services, ST=West Midlands, C=GB"), 365 * 24 * 3600)
+      new X500Name("CN=sso-stub, O=The University of Warwick, OU=IT Services, ST=West Midlands, C=GB"), (365 * 24 * 3600).toLong)
     samlResponse.sign(XMLSignature.ALGO_ID_SIGNATURE_RSA_SHA1, certGen.getPrivateKey, Seq(cert).asJava)
     val base64 = samlResponse.toBase64
     new String(base64, "ASCII")
