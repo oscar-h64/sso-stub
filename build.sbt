@@ -200,10 +200,13 @@ Universal / mappings ~= {
 
 dockerUpdateLatest := true
 dockerBaseImage := "adoptopenjdk/openjdk8:alpine-slim"
-dockerCmd := Seq("-Dpidfile.path=/dev/null")
 dockerChmodType := DockerChmodType.Custom("u=rwX,g=rX,o-rwx")
 dockerExposedPorts ++= Seq(8090, 8443)
 dockerEntrypoint := Seq("/opt/docker/bin/start")
+
+dockerLabels ++= Map(
+  "warwick.app-name" -> name.value
+)
 
 dockerCommands := dockerCommands.value.flatMap {
   case cmd@Cmd("USER", "root") => List(
@@ -214,5 +217,5 @@ dockerCommands := dockerCommands.value.flatMap {
   case other => List(other)
 }
 dockerCommands ++= Seq(
-  ExecCmd("RUN", "chmod", "570", "/opt/docker/conf")
+  ExecCmd("RUN", "chmod", "770", "/opt/docker/conf")
 )
