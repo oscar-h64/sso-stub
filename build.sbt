@@ -186,3 +186,33 @@ webpack := {
 runner := runner.dependsOn(webpack).value
 dist := dist.dependsOn(webpack).value
 stage := stage.dependsOn(webpack).value
+
+// Docker
+
+enablePlugins(DockerPlugin)
+import com.typesafe.sbt.packager.docker.{Cmd, ExecCmd}
+import com.typesafe.sbt.packager.docker.DockerChmodType
+
+Universal / mappings += file("docker/start.sh") -> "bin/start"
+Universal / mappings ~= {
+  _.filterNot { case (_,path) => Seq("application.conf", "worker.conf").exists(path.contains) }
+}
+
+dockerUpdateLatest := true
+dockerBaseImage := "adoptopenjdk/openjdk8:alpine-slim"
+dockerCmd := Seq("-Dpidfile.path=/dev/null")
+dockerChmodType := DockerChmodType.Custom("u=rwX,g=rX,o-rwx")
+dockerExposedPorts ++= Seq(8090, 8443)
+dockerEntrypoint := Seq("/opt/docker/bin/start")
+
+dockerCommands := dockerCommands.value.flatMap {
+  case cmd@Cmd("USER", "root") => List(
+    cmd,
+    ExecCmd("RUN", "apk", "--no-cache", "add", "bash"),
+    ExecCmd("RUN", "chmod", "g=u", "/etc/passwd")
+  )
+  case other => List(other)
+}
+dockerCommands ++= Seq(
+  ExecCmd("RUN", "chmod", "570", "/opt/docker/conf")
+)
