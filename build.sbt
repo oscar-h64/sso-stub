@@ -186,3 +186,33 @@ webpack := {
 runner := runner.dependsOn(webpack).value
 dist := dist.dependsOn(webpack).value
 stage := stage.dependsOn(webpack).value
+
+// Docker
+
+enablePlugins(DockerPlugin)
+import com.typesafe.sbt.packager.docker.{Cmd, ExecCmd}
+import com.typesafe.sbt.packager.docker.DockerChmodType
+
+Universal / mappings += file("docker/start.sh") -> "bin/start"
+
+dockerUpdateLatest := true
+dockerBaseImage := "adoptopenjdk/openjdk8:alpine-slim"
+dockerChmodType := DockerChmodType.Custom("u=rwX,g=rX,o-rwx")
+dockerExposedPorts ++= Seq(8080, 8443)
+dockerEntrypoint := Seq("/opt/docker/bin/start")
+
+dockerLabels ++= Map(
+  "warwick.app-name" -> name.value
+)
+
+dockerCommands := dockerCommands.value.flatMap {
+  case cmd@Cmd("USER", "root") => List(
+    cmd,
+    ExecCmd("RUN", "apk", "--no-cache", "add", "bash"),
+    ExecCmd("RUN", "chmod", "g=u", "/etc/passwd")
+  )
+  case other => List(other)
+}
+dockerCommands ++= Seq(
+  ExecCmd("RUN", "chmod", "770", "/opt/docker/conf")
+)
