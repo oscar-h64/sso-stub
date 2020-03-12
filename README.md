@@ -13,7 +13,7 @@ This application ships with Docker support. To build, tag and run a local contai
  $ docker run -p 127.0.0.1:8090:8080 sso-stub
 ```
 
-In this example the app will be available on the host on port 8090 over HTTP. You can also forward port 8443 if you want HTTPS.
+In this example the app will be available on the host on port 8090 over HTTP - i.e. `http://localhost:8090`. You can also forward port 8443 if you want HTTPS.
 
 To start the development server locally (without using Docker) on ports 8090 and 8443 (HTTP and self-signed auto TLS respectively) you can instead execute the `run.sh` script:
 
