@@ -198,7 +198,7 @@ Universal / mappings += file("docker/start.sh") -> "bin/start"
 dockerUpdateLatest := true
 dockerBaseImage := "adoptopenjdk/openjdk8:alpine-slim"
 dockerChmodType := DockerChmodType.Custom("u=rwX,g=rX,o-rwx")
-dockerExposedPorts ++= Seq(8090, 8443)
+dockerExposedPorts ++= Seq(8080, 8443)
 dockerEntrypoint := Seq("/opt/docker/bin/start")
 
 dockerLabels ++= Map(

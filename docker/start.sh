@@ -12,4 +12,6 @@ play.filters.hosts {
 }
 EOF
 
+export PLAY_HTTPS_PORT=8443
+
 /opt/docker/bin/play -Dpidfile.path=/dev/null -Dconfig.file=/opt/docker/conf/application.conf
