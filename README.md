@@ -1,11 +1,21 @@
 # SSO Stub
 
-This repo will contain a simple stub Single Sign-on server for local application development. The aim is to make working with
+This repo contains a simple stub Single Sign-on server for local application development. The aim is to make working with
 ITS web applications (e.g. [Tabula](https://github.com/UniversityofWarwick/tabula)) painless.
 
 ## Getting started
 
-To start the development server on ports 8080 and 8443 (HTTP and self-signed auto TLS respectively), execute the `run.sh` script:
+This application ships with Docker support. To build, tag and run a local container image, perform the following steps:
+
+```
+ $ ./sbt docker:stage
+ $ ./sbt docker:publishLocal
+ $ docker run -p 127.0.0.1:8090:8080 sso-stub
+```
+
+In this example the app will be available on the host on port 8090 over HTTP. You can also forward port 8443 if you want HTTPS.
+
+To start the development server locally (without using Docker) on ports 8090 and 8443 (HTTP and self-signed auto TLS respectively) you can instead execute the `run.sh` script:
 
 ```
 $ ./run.sh
@@ -19,12 +29,7 @@ Supported platforms: macOS, Linux
 
 </details>
 
-The homepage will be accessible at `https://localhost:8443`. If you are using
-an application with a built-in Docker environment (i.e. Tabula), it will assume you're using
-sso-stub and set-up a virtual host for you.
-
-Otherwise, you'll need to put a reverse proxy in front of `sso-stub` such that
-something can listen on 443.
+The homepage should be accessible at `https://localhost:8443`.
 
 Next steps
 ----------
