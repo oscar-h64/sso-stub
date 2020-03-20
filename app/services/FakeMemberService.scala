@@ -23,7 +23,7 @@ class FakeMemberServiceImpl extends FakeMemberService {
       val range: Seq[Int] = d.staffStartId to d.staffEndId
       range.map(ri => {
         val name = SandboxData.randomName(ri.longValue(), if (ri % 2 == 0) Gender.Male else Gender.Female)
-        val userCode = "u" + ri
+        val userCode = "in-sso-stub-" + ri
         (d, domain.BasicMember(
           userCode,
           "WarwickADS",
