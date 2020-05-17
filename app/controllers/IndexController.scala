@@ -122,6 +122,17 @@ class IndexController extends BaseController {
   }
 
   def respondToSentry() = Action { implicit request =>
-    Ok("returnType=1\nid=" + request.body.asFormUrlEncoded.get("token"))
+    val id = request.body.asFormUrlEncoded.get("token").head
+    // wtf, Adam
+    val members = (fakeMemberService.getStaff++fakeMemberService.getStudents).filter(m => m.universityId == id)
+
+    if(members.isEmpty) {
+      Ok("returnType=51")
+    }
+    else {
+      val response = fakeMemberService.getResponseFor(members.head)
+      val attributes = AttributeConverter.toAttributes(response)
+      Ok("returnType=1\nid=" + members.head.universityId + "\n" + attributes.map(_.productIterator.mkString("=")).mkString("\n"))
+    }
   }
 }
