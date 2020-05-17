@@ -11,7 +11,7 @@ import org.opensaml.{XML, _}
 import org.w3c.dom.{Document, Element}
 import play.api.data.Form
 import play.api.data.Forms._
-import play.api.mvc.{Action, AnyContent}
+import play.api.mvc.{Action, AnyContent, Cookie}
 import services.FakeMemberService
 import sun.security.tools.keytool.CertAndKeyGen
 import sun.security.x509.X500Name
@@ -58,6 +58,15 @@ class IndexController extends BaseController {
     samlResponse.sign(XMLSignature.ALGO_ID_SIGNATURE_RSA_SHA1, certGen.getPrivateKey, Seq(cert).asJava)
     val base64 = samlResponse.toBase64
     new String(base64, "ASCII")
+  }
+
+  def slogin(providerId: String, target: String) = Action { implicit request =>
+    Ok(views.html.slogin(providerId, target, (fakeMemberService.getStaff++fakeMemberService.getStudents)))
+  }
+
+  def performOldMode(providerId: String, target: String) = Action { implicit request =>
+    val userData = chosenUserForm.bindFromRequest.get
+    Redirect(target).withCookies(Cookie("WarwickSSO", userData.uid))
   }
 
   case class ChosenUser(uid: String)
@@ -112,4 +121,7 @@ class IndexController extends BaseController {
     Ok(scala.xml.XML.loadString(new String(canonicalizer.canonicalizeSubtree(soapEnvelope))))
   }
 
+  def respondToSentry() = Action { implicit request =>
+    Ok("returnType=1\nid=" + request.body.asFormUrlEncoded.get("token"))
+  }
 }
