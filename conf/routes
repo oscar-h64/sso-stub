@@ -13,7 +13,10 @@ GET         /service/healthcheck                    @warwick.healthcheck.Injecte
 GET         /                                       @controllers.IndexController.home
 GET         /origin/hs                              @controllers.IndexController.hs(shire, providerId, target)
 POST        /origin/hs                              @controllers.IndexController.generateAcs(shire, providerId, target)
+GET         /origin/slogin                          @controllers.IndexController.slogin(providerId, target)
+POST        /origin/slogin                          @controllers.IndexController.performOldMode(providerId, target)
 POST        /origin/aa                              @controllers.IndexController.respondToAa()
+POST        /origin/sentry                          @controllers.IndexController.respondToSentry()
 
 ## Fallbacks ##
 
