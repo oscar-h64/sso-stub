@@ -194,10 +194,11 @@ import com.typesafe.sbt.packager.docker.{Cmd, ExecCmd}
 import com.typesafe.sbt.packager.docker.DockerChmodType
 
 Universal / mappings += file("docker/start.sh") -> "bin/start"
+Universal / mappings += file("docker/target/dev-mode/") -> "target/dev-mode/"
 
 dockerUpdateLatest := true
 dockerBaseImage := "adoptopenjdk/openjdk8:alpine-slim"
-dockerChmodType := DockerChmodType.Custom("u=rwX,g=rX,o-rwx")
+dockerChmodType := DockerChmodType.UserGroupWriteExecute
 dockerExposedPorts ++= Seq(8080, 8443)
 dockerEntrypoint := Seq("/opt/docker/bin/start")
 
