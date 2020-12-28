@@ -8,8 +8,7 @@ ITS web applications (e.g. [Tabula](https://github.com/UniversityofWarwick/tabul
 This application ships with Docker support. To build, tag and run a local container image, perform the following steps:
 
 ```
- $ ./sbt docker:stage
- $ ./sbt docker:publishLocal
+ $ ./buildDocker.sh
  $ docker run -p 127.0.0.1:8090:8080 sso-stub
 ```
 
