@@ -201,7 +201,7 @@ webpack := {
 runner := runner.dependsOn(webpack).value
 dist := dist.dependsOn(webpack).value
 Docker / stage := (Docker / stage).dependsOn(webpack).value
-
+Compile / run := (Compile / run).dependsOn(webpack).evaluated
 // Docker
 
 enablePlugins(DockerPlugin)
