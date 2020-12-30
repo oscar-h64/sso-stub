@@ -165,27 +165,42 @@ bambooTest := {
 // Webpack task
 
 import scala.sys.process.Process
+import java.nio.file.{Files, Paths}
 
 lazy val webpack = taskKey[Unit]("Run webpack when packaging the application")
 lazy val webpackEnabled = settingKey[Boolean]("Is webpack enabled")
 
-def runWebpack(file: File): Int = Process("npm run build", file).!
+def runWebpack(file: File): Int = {
+  val needsNpmCi = !Files.exists(Paths.get(file.getAbsolutePath, "node_modules")) || Files.getLastModifiedTime(Paths.get(file.getAbsolutePath, "node_modules")).toMillis.compareTo(Files.getLastModifiedTime(Paths.get(file.getAbsolutePath, "package-lock.json")).toMillis) < 0
+  if (needsNpmCi) {
+    (Process("npm ci", file) #&& Process("npm run build", file)).!
+  } else {
+    Process("npm run build", file).!
+  }
+}
 
 webpack := {
   if (webpackEnabled.value) {
-    Changes.ifChanged(
-      target.value / "webpack-tracking",
-      baseDirectory.value / "app" / "assets",
-      target.value / "assets"
-    ) {
+    if (!Files.exists(Paths.get(baseDirectory.value.getAbsolutePath, "target/assets/main.js"))) {
+      // If we don't even have a first build of any assets
+      // we don't give a damn whether app/assets has changed or not
+      println("Forcing webpack build, no assets have been built yet")
       if (runWebpack(baseDirectory.value) != 0) throw new Exception("Something went wrong when running webpack.")
+    } else {
+      Changes.ifChanged(
+        target.value / "webpack-tracking",
+        baseDirectory.value / "app" / "assets",
+        target.value / "assets"
+      ) {
+        if (runWebpack(baseDirectory.value) != 0) throw new Exception("Something went wrong when running webpack.")
+      }
     }
   }
 }
 
 runner := runner.dependsOn(webpack).value
 dist := dist.dependsOn(webpack).value
-stage := stage.dependsOn(webpack).value
+Docker / stage := stage.dependsOn(webpack).value
 
 // Docker
 
