@@ -167,15 +167,21 @@ bambooTest := {
 import scala.sys.process.Process
 import java.nio.file.{Files, Paths}
 
+lazy val npmCi = taskKey[Unit]("npm ci")
 lazy val webpack = taskKey[Unit]("Run webpack when packaging the application")
 lazy val webpackEnabled = settingKey[Boolean]("Is webpack enabled")
 
 def runWebpack(file: File): Int = {
-  val needsNpmCi = !Files.exists(Paths.get(file.getAbsolutePath, "node_modules")) || Files.getLastModifiedTime(Paths.get(file.getAbsolutePath, "node_modules")).toMillis.compareTo(Files.getLastModifiedTime(Paths.get(file.getAbsolutePath, "package-lock.json")).toMillis) < 0
-  if (needsNpmCi) {
-    (Process("npm ci", file) #&& Process("npm run build", file)).!
-  } else {
-    Process("npm run build", file).!
+  Process("npm run build", file).!
+}
+
+npmCi := {
+  Changes.ifChanged(
+    target.value / "npm-tracking",
+    baseDirectory.value / "package-lock.json",
+    baseDirectory.value / "node_modules"
+  ) {
+    Process("npm ci", baseDirectory.value).!
   }
 }
 
@@ -197,6 +203,8 @@ webpack := {
     }
   }
 }
+
+webpack := webpack.dependsOn(npmCi).value
 
 runner := runner.dependsOn(webpack).value
 dist := dist.dependsOn(webpack).value
