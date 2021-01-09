@@ -1,0 +1,18 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - run: |
+        IMAGE_NAME="docker.pkg.github.com/${GITHUB_REPOSITORY}/app:latest"
+        ./buildDocker.sh
+        docker image tag sso-stub:latest ${IMAGE_NAME}
+        echo "${{ github.token }}" | docker login https://docker.pkg.github.com -u ${GITHUB_ACTOR} --password-stdin
+        docker push $IMAGE_NAME
