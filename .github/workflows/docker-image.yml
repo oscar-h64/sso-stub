@@ -10,9 +10,12 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+      env:
+       HUB_LOGIN: "${{ secrets.HUB_LOGIN }}"
     - run: |
-        IMAGE_NAME="docker.pkg.github.com/${GITHUB_REPOSITORY}/app:latest"
+        IMAGE_NAME="universityofwarwick/sso-stub:latest"
         ./buildDocker.sh
         docker image tag sso-stub:latest ${IMAGE_NAME}
-        echo "${{ github.token }}" | docker login https://docker.pkg.github.com -u ${GITHUB_ACTOR} --password-stdin
+        echo "${HUB_LOGIN}" | docker login -u adamlwilliams --password-stdin
         docker push $IMAGE_NAME
+
