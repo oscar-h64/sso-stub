@@ -1,0 +1,20 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout, build and push
+      uses: actions/checkout@v2
+      env:
+       HUB_LOGIN: "${{ secrets.HUB_LOGIN }}"
+    - run: |
+        IMAGE_NAME="universityofwarwick/sso-stub:latest"
+        ./buildDocker.sh
+        docker image tag sso-stub:latest ${IMAGE_NAME}
+        echo "${HUB_LOGIN}" | docker login -u adamlwilliams --password-stdin
+        docker push $IMAGE_NAME
