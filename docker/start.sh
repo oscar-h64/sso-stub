@@ -7,9 +7,8 @@ cat <<EOF > /opt/docker/conf/local-dev.conf
 play.http.secret.key="$key"
 
 app.webgroup.prefix="in-"\${app.name.id}"-local-dev-"
-play.filters.hosts {
-  allowed = ["localhost:8090", "localhost:8443"]
-}
+
+play.filters.disabled+=play.filters.hosts.AllowedHostsFilter
 EOF
 
 export PLAY_HTTPS_PORT=8443
