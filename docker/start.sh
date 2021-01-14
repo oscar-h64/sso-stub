@@ -8,7 +8,7 @@ play.http.secret.key="$key"
 
 app.webgroup.prefix="in-"\${app.name.id}"-local-dev-"
 
-play.filters.disabled+=play.filters.hosts.AllowedHostsFilter
+play.filters.disabled += play.filters.hosts.AllowedHostsFilter
 EOF
 
 export PLAY_HTTPS_PORT=8443
