@@ -19,6 +19,8 @@ import sun.security.x509.X500Name
 import scala.collection.JavaConverters._
 import scala.language.postfixOps
 
+import domain.Member
+
 @Singleton
 class IndexController extends BaseController {
 
@@ -121,18 +123,24 @@ class IndexController extends BaseController {
     Ok(scala.xml.XML.loadString(new String(canonicalizer.canonicalizeSubtree(soapEnvelope))))
   }
 
-  def respondToSentry() = Action { implicit request =>
-    val id = request.body.asFormUrlEncoded.get("token").head
+  def sentryLookup(notFoundCode: String, memberFilter: Member => Boolean) = {
     // wtf, Adam
-    val members = (fakeMemberService.getStaff++fakeMemberService.getStudents).filter(m => m.universityId == id)
+    val members = (fakeMemberService.getStaff++fakeMemberService.getStudents).filter(memberFilter)
 
     if(members.isEmpty) {
-      Ok("returnType=51")
+      Ok("returnType=" + notFoundCode)
     }
     else {
       val response = fakeMemberService.getResponseFor(members.head)
       val attributes = AttributeConverter.toAttributes(response)
       Ok("returnType=1\nid=" + members.head.universityId + "\n" + attributes.map(_.productIterator.mkString("=")).mkString("\n"))
+    }
+  }
+
+  def respondToSentry(requestType: Int, user: Option[String]) = Action { implicit request =>
+    requestType match {
+      case 1 => sentryLookup("51", _.universityId == request.body.asFormUrlEncoded.get("token").head)
+      case 4 => sentryLookup("54", _.userCode == user.getOrElse(""))
     }
   }
 }
