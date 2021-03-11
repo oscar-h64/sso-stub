@@ -123,31 +123,31 @@ class IndexController extends BaseController {
     Ok(scala.xml.XML.loadString(new String(canonicalizer.canonicalizeSubtree(soapEnvelope))))
   }
 
-  def sentryLookup(notFoundCode: String, memberFilter: Member => Boolean) = {
+  def sentryLookup(requestType: String, memberFilter: Member => Boolean) = {
     // wtf, Adam
     val members = (fakeMemberService.getStaff++fakeMemberService.getStudents).filter(memberFilter)
 
     if(members.isEmpty) {
-      Ok("returnType=" + notFoundCode)
+      Ok("returnType=5" + requestType)
     }
     else {
       val response = fakeMemberService.getResponseFor(members.head)
       val attributes = AttributeConverter.toAttributes(response)
-      Ok("returnType=1\nid=" + members.head.universityId + "\n" + attributes.map(_.productIterator.mkString("=")).mkString("\n"))
+      Ok("returnType=" + requestType + "\nid=" + members.head.universityId + "\n" + attributes.map(_.productIterator.mkString("=")).mkString("\n"))
     }
   }
 
   def respondToSentry(requestType: Int, user: Option[String], password: Option[String]) = Action { implicit request =>
     requestType match {
       case 1 if (request.method == "POST") =>
-        sentryLookup("51", _.universityId == request.body.asFormUrlEncoded.get("token").head)
+        sentryLookup("1", _.universityId == request.body.asFormUrlEncoded.get("token").head)
 
       case 2 if (request.method == "POST" && user.nonEmpty && password.nonEmpty) =>
-        sentryLookup("52", _.userCode == user.get)
+        sentryLookup("2", _.userCode == user.get)
 
       case 4 if (user.nonEmpty) =>
-        sentryLookup("54", _.userCode == user.get)
-        
+        sentryLookup("4", _.userCode == user.get)
+
       case _ => BadRequest
     }
   }
