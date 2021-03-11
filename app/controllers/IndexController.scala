@@ -85,7 +85,7 @@ class IndexController extends BaseController {
     val reqId = (request.body \\ "Envelope" \\ "Body" \\ "Request" \\ "@RequestID" headOption).map(_.text)
     val member = (fakeMemberService.getStaff++fakeMemberService.getStudents).filter(m => m.universityId == name.get).head
 
-    val attributes: Seq[SAMLAttribute] = AttributeConverter.toAttributes(fakeMemberService.getResponseFor(member)).toList map {
+    val attributes: Seq[SAMLAttribute] = AttributeConverter.toAttributes(fakeMemberService.getResponseFor(member), false).toList map {
       case (name: String, value: String) =>
         new SAMLAttribute(
           name,
@@ -132,7 +132,7 @@ class IndexController extends BaseController {
     }
     else {
       val response = fakeMemberService.getResponseFor(members.head)
-      val attributes = AttributeConverter.toAttributes(response)
+      val attributes = AttributeConverter.toAttributes(response, false)
       Ok("returnType=" + requestType + "\nid=" + members.head.universityId + "\n" + attributes.map(_.productIterator.mkString("=")).mkString("\n"))
     }
   }
