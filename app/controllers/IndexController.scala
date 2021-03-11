@@ -137,10 +137,18 @@ class IndexController extends BaseController {
     }
   }
 
-  def respondToSentry(requestType: Int, user: Option[String]) = Action { implicit request =>
+  def respondToSentry(requestType: Int, user: Option[String], password: Option[String]) = Action { implicit request =>
     requestType match {
-      case 1 => sentryLookup("51", _.universityId == request.body.asFormUrlEncoded.get("token").head)
-      case 4 => sentryLookup("54", _.userCode == user.getOrElse(""))
+      case 1 if (request.method == "POST") =>
+        sentryLookup("51", _.universityId == request.body.asFormUrlEncoded.get("token").head)
+
+      case 2 if (request.method == "POST" && user.nonEmpty && password.nonEmpty) =>
+        sentryLookup("52", _.userCode == user.get)
+
+      case 4 if (user.nonEmpty) =>
+        sentryLookup("54", _.userCode == user.get)
+        
+      case _ => BadRequest
     }
   }
 }
