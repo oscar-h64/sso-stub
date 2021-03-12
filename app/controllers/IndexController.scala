@@ -137,13 +137,15 @@ class IndexController extends BaseController {
     }
   }
 
-  def respondToSentry(requestType: Int, user: Option[String], password: Option[String]) = Action { implicit request =>
+  def respondToSentry(requestType: Int, user: Option[String]) = Action { implicit request =>
+    val formData = request.body.asFormUrlEncoded;
+    
     requestType match {
-      case 1 if (request.method == "POST") =>
-        sentryLookup("1", _.universityId == request.body.asFormUrlEncoded.get("token").head)
+      case 1 if (request.method == "POST" && formData.get("token").nonEmpty) =>
+        sentryLookup("1", _.universityId == formData.get("token").head)
 
-      case 2 if (request.method == "POST" && user.nonEmpty && password.nonEmpty) =>
-        sentryLookup("2", _.userCode == user.get)
+      case 2 if (request.method == "POST" && formData.get("user").nonEmpty && formData.get("pass").nonEmpty) =>
+        sentryLookup("2", _.userCode == formData.get("user").head)
 
       case 4 if (user.nonEmpty) =>
         sentryLookup("4", _.userCode == user.get)
