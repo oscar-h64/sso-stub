@@ -121,11 +121,11 @@ object AttributeConverter {
     )
 
     if (oldMode)
-      return attribs + ("name" -> (r.givenName + " " + r.familyName), "member" -> (isStaff || isStudent).toString)
+      attribs + ("name" -> (r.givenName + " " + r.familyName), "member" -> (isStaff || isStudent).toString)
     else {
       // We can assume everyone is either staff of student
       val dn = s"CN=${r.userCode},OU=${if (isStaff) "Staff" else "Student"},OU=CU,OU=WARWICK,DC=ads,DC=warwick,DC=ac,DC=uk"
-      return attribs + ("cn" -> r.userCode, "dn" -> dn)
+      attribs + ("cn" -> r.userCode, "dn" -> dn)
     }
   }
 }
