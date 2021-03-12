@@ -19,6 +19,8 @@ import sun.security.x509.X500Name
 import scala.collection.JavaConverters._
 import scala.language.postfixOps
 
+import domain.Member
+
 @Singleton
 class IndexController extends BaseController {
 
@@ -83,7 +85,7 @@ class IndexController extends BaseController {
     val reqId = (request.body \\ "Envelope" \\ "Body" \\ "Request" \\ "@RequestID" headOption).map(_.text)
     val member = (fakeMemberService.getStaff++fakeMemberService.getStudents).filter(m => m.universityId == name.get).head
 
-    val attributes: Seq[SAMLAttribute] = AttributeConverter.toAttributes(fakeMemberService.getResponseFor(member)).toList map {
+    val attributes: Seq[SAMLAttribute] = AttributeConverter.toAttributes(fakeMemberService.getResponseFor(member), oldMode = false).toList map {
       case (name: String, value: String) =>
         new SAMLAttribute(
           name,
@@ -121,18 +123,34 @@ class IndexController extends BaseController {
     Ok(scala.xml.XML.loadString(new String(canonicalizer.canonicalizeSubtree(soapEnvelope))))
   }
 
-  def respondToSentry() = Action { implicit request =>
-    val id = request.body.asFormUrlEncoded.get("token").head
+  def sentryLookup(requestType: String, memberFilter: Member => Boolean) = {
     // wtf, Adam
-    val members = (fakeMemberService.getStaff++fakeMemberService.getStudents).filter(m => m.universityId == id)
+    val members = (fakeMemberService.getStaff++fakeMemberService.getStudents).filter(memberFilter)
 
     if(members.isEmpty) {
-      Ok("returnType=51")
+      Ok("returnType=5" + requestType)
     }
     else {
       val response = fakeMemberService.getResponseFor(members.head)
-      val attributes = AttributeConverter.toAttributes(response)
-      Ok("returnType=1\nid=" + members.head.universityId + "\n" + attributes.map(_.productIterator.mkString("=")).mkString("\n"))
+      val attributes = AttributeConverter.toAttributes(response, oldMode = true)
+      Ok("returnType=" + requestType + "\nid=" + members.head.universityId + "\n" + attributes.map(_.productIterator.mkString("=")).mkString("\n"))
+    }
+  }
+
+  def respondToSentry(requestType: Int, user: Option[String]) = Action { implicit request =>
+    val formData = request.body.asFormUrlEncoded;
+    
+    requestType match {
+      case 1 if request.method == "POST" && formData.get("token").nonEmpty =>
+        sentryLookup("1", _.universityId == formData.get("token").head)
+
+      case 2 if request.method == "POST" && formData.get("user").nonEmpty && formData.get("pass").nonEmpty =>
+        sentryLookup("2", _.userCode == formData.get("user").head)
+
+      case 4 if user.nonEmpty =>
+        sentryLookup("4", _.userCode == user.get)
+
+      case _ => BadRequest
     }
   }
 }
