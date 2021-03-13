@@ -18,6 +18,9 @@ import sun.security.x509.X500Name
 
 import scala.collection.JavaConverters._
 import scala.language.postfixOps
+import scala.xml.Elem
+import scala.xml.NodeSeq
+import scala.xml.Utility.trim
 
 import domain.Member
 
@@ -155,5 +158,32 @@ class IndexController extends BaseController {
 
       case _ => BadRequest
     }
+  }
+
+  def memberToXML(r: Member, isStaff: Boolean): Elem = {
+    <user>
+      <attribute name="warwickprimary" value={if (r.warwickPrimary) "Yes" else "No"} />
+      <attribute name="warwickuniid" value={r.universityId} />
+      <attribute name="cn" value={r.universityId} />
+      <attribute name="mail" value={r.mail} />
+      <attribute name="givenName" value={r.givenName} />
+      <attribute name="sn" value={r.familyName} />
+      <attribute name="warwickdeptcode" value={r.department.code} />
+      <attribute name="deptshort" value={r.department.name} />
+      <attribute name="department" value={r.department.name} />
+      <attribute name="ou" value="TODO" />
+      <attribute name="student" value={(!isStaff).toString} />
+      <attribute name="staff" value={isStaff.toString} />
+      <attribute name="logindisabled" value={false.toString} />
+      <attribute name="passwordexpired" value={false.toString} />
+    </user>
+  }
+
+  def respondToUserSearch(f_warwickuniid: Option[String], f_cn: Option[String], f_mail: Option[String], f_givenName: Option[String], f_sn: Option[String], f_warwickdeptcode: Option[String], f_deptshort: Option[String], f_department: Option[String], f_warwickitsclass: Option[String]) = Action { implicit request =>
+    val filteredUsersStaff: List[Member] = List(fakeMemberService.getStaff.filter(_.universityId == "5300001").head)
+    val filteredUsersStudents: List[Member] = List()
+    
+    val results = filteredUsersStaff.map(memberToXML(_, isStaff=true)) ++ filteredUsersStudents.map(memberToXML(_, isStaff=false))
+    Ok(trim(<results>{NodeSeq.fromSeq(xml)}</results>))
   }
 }
