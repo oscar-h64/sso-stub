@@ -146,6 +146,9 @@ class IndexController extends BaseController {
 
       case 2 if request.method == "POST" && formData.get("user").nonEmpty && formData.get("pass").nonEmpty =>
         sentryLookup("2", _.userCode == formData.get("user").head)
+      
+      case 4 if request.method == "POST" && formData.get("user").nonEmpty =>
+        sentryLookup("4", _.userCode == formData.get("user").head)
 
       case 4 if user.nonEmpty =>
         sentryLookup("4", _.userCode == user.get)
