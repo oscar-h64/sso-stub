@@ -184,6 +184,6 @@ class IndexController extends BaseController {
     val filteredUsersStudents: List[Member] = List()
     
     val results = filteredUsersStaff.map(memberToXML(_, isStaff=true)) ++ filteredUsersStudents.map(memberToXML(_, isStaff=false))
-    Ok(trim(<results>{NodeSeq.fromSeq(xml)}</results>))
+    Ok(trim(<results>{NodeSeq.fromSeq(results)}</results>))
   }
 }
